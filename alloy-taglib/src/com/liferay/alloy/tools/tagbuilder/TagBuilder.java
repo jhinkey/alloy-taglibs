@@ -171,7 +171,7 @@ public class TagBuilder {
 
 		for (Element attributeNode : nodes) {
 			String defaultValue = attributeNode.elementText("defaultValue");
-			String description = attributeNode.elementText("description");
+			String description = componentNode.elementText("description");
 			String name = attributeNode.elementText("name");
 			String type = GetterUtil.getString(
 				attributeNode.elementText("type"), _DEFAULT_TYPE);
@@ -689,7 +689,9 @@ public class TagBuilder {
 
 		for (Document doc : _componentsExtDoc) {
 			Element root = doc.getRootElement();
-
+			
+			String description = GetterUtil.getString(
+				root.attributeValue("description"), _DEFAULT_TAGLIB_DESCRIPTION);			
 			String shortName = GetterUtil.getString(
 				root.attributeValue("short-name"), _DEFAULT_TAGLIB_SHORT_NAME);
 			String uri = GetterUtil.getString(
@@ -698,6 +700,7 @@ public class TagBuilder {
 				root.attributeValue("tlib-version"), _DEFAULT_TAGLIB_VERSION);
 
 			context.put("alloyComponent", shortName.equals(_DEFAULT_NAMESPACE));
+			context.put("description", description);
 			context.put("shortName", shortName);
 			context.put("uri", uri);
 			context.put("version", version);
@@ -741,6 +744,7 @@ public class TagBuilder {
 	private static final String _DEFAULT_TAGLIB_URI = "http://alloy.liferay.com/tld/alloy";
 	private static final String _DEFAULT_TAGLIB_VERSION = "1.0";
 	private static final String _DEFAULT_TYPE = "java.lang.Object";
+	private static final String _DEFAULT_TAGLIB_DESCRIPTION = "";
 	private static final String _EVENT = "event";
 	private static final String _EVENTS = "events";
 	private static final String _INIT_EXT_PAGE = "/init-ext.jspf";
